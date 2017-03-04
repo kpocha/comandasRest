@@ -1,0 +1,112 @@
+﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="Imports.include.t4" #>
+@model IEnumerable<#= "<" + ViewDataTypeName + ">" #>
+@using GridMvc.Html
+
+@{
+    //ViewBag.Title = "Index";
+    var numeroFilas = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["rowGrid"]);
+}
+<#
+// The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
+if(IsPartialView) {
+#>
+
+<#
+} else if(IsLayoutPageSelected) {
+#>
+
+@{
+    ViewBag.Title = "<#= ViewName#>";
+<#
+if (!String.IsNullOrEmpty(LayoutPageFile)) {
+#>
+    Layout = "<#= LayoutPageFile#>";
+<#
+}
+#>
+}
+
+<#
+} else {
+#>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title><#= ViewName #></title>
+</head>
+<body>
+<#
+    PushIndent("    ");
+}
+#>
+<h2>
+    <#= ViewName #>
+    @Html.ActionLink("Nuevo", "Create",null, new  { @class = "btn btn-success btn-lg", @style = "float:right" })
+</h2>
+<hr />
+<div class="row">
+    <div class="col-lg-12">
+        @Html.Grid(Model).Columns(columns =>
+        {
+<#
+IEnumerable<PropertyMetadata> properties = ModelMetadata.Properties;
+foreach (PropertyMetadata property in properties) {
+    if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+#>
+<#
+        // We do not want to show any association properties for which there is
+        // no associated foreign key.
+        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+            continue;
+        }
+        if(property.PropertyName != "habilitado")
+        {
+            #>      
+            columns.Add(a => a.<#= GetValueExpression(property) #>).Titled("<#= property.PropertyName #>").Filterable(true); //.RenderValueAs(d => (d.<#= GetValueExpression(property) #> == null ? "" : d.<#= GetValueExpression(property) #>)); //Put last method when value comes null.
+            <#
+        }
+        
+     }
+}
+string pkName = GetPrimaryKeyName();
+if (pkName != null) {
+#>
+
+			columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("DETALLE").RenderValueAs(d =>  @Html.ActionLink(" ", "Details", new { @id = d.<#= pkName #> }, new { @class = "icon-info text-info", @style = "margin-left:30%;" }));
+            columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("EDITAR").RenderValueAs(d =>  @Html.ActionLink(" ", "Edit", new { @id = d.<#= pkName #>}, new { @class = "icon-pencil text-warning", @style = "margin-left:30%;" }));
+            columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("ELIMINAR").RenderValueAs(d => @Html.ActionLink(" ", "Delete", new { @id = d.<#= pkName #> }, new { @class = "icon-trash text-danger swal-delete", @style = "margin-left:30%;" }));
+<#
+} else {
+#>
+
+			columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("DETALLE").RenderValueAs(d =>  @Html.ActionLink(" ", "Details", new { @id = d./* id=item.PrimaryKey */ }, new { @class = "icon-info text-info", @style = "margin-left:30%;" }));
+            columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("EDITAR").RenderValueAs(d =>  @Html.ActionLink(" ", "Edit", new { @id = d./* id=item.PrimaryKey */}, new { @class = "icon-pencil text-warning", @style = "margin-left:30%;" }));
+            columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("ELIMINAR").RenderValueAs(d => @Html.ActionLink(" ", "Delete", new { @id = d./* id=item.PrimaryKey */ }, new { @class = "icon-trash text-danger swal-delete", @style = "margin-left:30%;" }));
+<#
+}
+#>
+  }).SetLanguage("ES").WithPaging(15).Sortable().Filterable().WithMultipleFilters()
+    </div>
+</div>
+<#
+// The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+#>
+<#
+if(!IsPartialView && !IsLayoutPageSelected) {
+    ClearIndent();
+#>
+</body>
+</html>
+<#
+}
+#>
+<#@ include file="ModelMetadataFunctions.cs.include.t4" #>

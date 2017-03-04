@@ -1,0 +1,238 @@
+﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="Imports.include.t4" #>
+@model <#= ViewDataTypeName #>
+<#
+// The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
+if(IsPartialView) {
+#>
+
+<#
+} else if(IsLayoutPageSelected) {
+#>
+
+@{
+    ViewBag.Title = "<#= ViewName#>";
+<#
+if (!String.IsNullOrEmpty(LayoutPageFile)) {
+#>
+    Layout = "<#= LayoutPageFile#>";
+<#
+}
+#>
+}
+
+<#
+} else {
+#>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title><#= ViewName #></title>
+</head>
+<body>
+<#
+    PushIndent("    ");
+}
+#>
+<style>
+        #titulo {text-transform: uppercase;}
+        .margin{margin-top:10px;}
+        .panel-title-principal{background-color:#ebebeb;}
+        .marginlg{margin-top:25px;}
+    </style>
+<div class="containe">
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>Home &raquo; <#= ViewDataTypeShortName #> &raquo; Detalle</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default panel-title-principal">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6 pull-left margin">
+                            <h2 id="titulo" class="pull-left ">DETALLE <#= ViewDataTypeShortName #></h2>
+                        </div>
+                        <div class="col-md-6 col-xs-6 pull-right">
+                            <a href="@Url.Action("Index", "<#= ViewDataTypeShortName #>")" class="btn btn-info pull-right margin" style="display:inline-block;">
+                                <span class="icon icon-action-undo"></span>
+                                Volver
+                            </a>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<#
+var model = 0;
+string pkName = GetPrimaryKeyName();
+foreach (PropertyMetadata property in ModelMetadata.Properties) {
+    if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+        model ++;
+    }
+}
+
+if (model > 8) {
+    #>
+    <div class="col-md-6">
+    <#
+    var count = 0;
+    foreach (PropertyMetadata property in ModelMetadata.Properties) {
+       
+        if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+         count++;
+    #>
+    <#
+            // We do not want to show any association properties for which there is
+            // no associated foreign key.
+            if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+                continue;
+            }else if(property.PropertyName == "habilitado" || property.PropertyName == "Habilitado"){
+	#>
+			@Html.HiddenFor(model => model.<#= property.PropertyName #>)
+	<#
+			}else if (count%2 != 0) {        
+    #>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.<#= GetValueExpression(property) #>, htmlAttributes: new { @class = "control-label col-md-4 col-sm-3 margin" })
+                    <div class="col-md-8 col-sm-9 margin">
+                        @Html.EditorFor(model => model.<#= GetValueExpression(property) #>, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                </div>
+    <#
+            }
+        }
+    }
+    #>
+    </div>
+    <div class="col-md-6">
+    <#
+        count = 0;
+    foreach (PropertyMetadata property in ModelMetadata.Properties) {
+       
+        if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+         count++;
+            // We do not want to show any association properties for which there is
+            // no associated foreign key.
+            if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+                continue;
+            }else if(property.PropertyName == "habilitado" || property.PropertyName == "Habilitado"){
+	#>
+			@Html.HiddenFor(model => model.<#= property.PropertyName #>)
+	<#
+			}else if (count%2 != 0) {        
+    #>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.<#= GetValueExpression(property) #>, htmlAttributes: new { @class = "control-label col-md-4 col-sm-3 margin" })
+                    <div class="col-md-8 col-sm-9 margin">
+                        @Html.EditorFor(model => model.<#= GetValueExpression(property) #>, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                </div>
+    <#
+            }
+        }
+    }
+    #>
+    </div>
+<#
+    if (pkName != null) {
+#>
+<div class="form-group">
+    <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-left">
+        @Html.ActionLink("Editar", "Edit", null, new { id = Model.<#= pkName #> }, new { @class = "btn btn-info marginlg" }) &nbsp;
+    </div>
+</div>
+<#
+} else {
+#>
+<div class="form-group">
+    <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-left">
+        @Html.ActionLink("Editar", "Edit", null, new { /* id = Model.PrimaryKey */ }, new { @class = "btn btn-info marginlg" }) &nbsp;
+    </div>
+</div>
+
+<#
+}
+#>
+    <#
+}else{
+    #>
+  <div class="col-md-6 col-md-offset-3 col-sm-offset-3">
+<#
+foreach (PropertyMetadata property in ModelMetadata.Properties) {
+    if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+#>
+<#
+        // We do not want to show any association properties for which there is
+        // no associated foreign key.
+        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+            continue;
+        }else if(property.PropertyName == "habilitado" || property.PropertyName == "Habilitado"){
+	#>
+			@Html.HiddenFor(model => model.<#= property.PropertyName #>)
+	<#
+			continue;
+			}
+#>
+        <div class="form-group">
+            @Html.LabelFor(model => model.<#= GetValueExpression(property) #>, htmlAttributes: new { @class = "control-label col-md-4 col-sm-3 margin" })
+            <div class="col-md-8 col-sm-9 margin">
+                @Html.EditorFor(model => model.<#= GetValueExpression(property) #>, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+<#
+    }
+}
+#>
+
+<#
+
+if (pkName != null) {
+#>
+<div class="form-group">
+    <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-left">
+        @Html.ActionLink("Editar", "Edit", null, new { id = Model.<#= pkName #> }, new { @class = "btn btn-info marginlg" }) &nbsp;
+    </div>
+</div>
+<#
+} else {
+#>
+<div class="form-group">
+    <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-left">
+        @Html.ActionLink("Editar", "Edit", null, new { /* id = Model.PrimaryKey */ }, new { @class = "btn btn-info marginlg" }) &nbsp;
+    </div>
+</div>
+
+<#
+}
+#>
+    </div>
+<#
+}
+#>
+
+</div>
+<#
+// The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+#>
+<#
+if(!IsPartialView && !IsLayoutPageSelected) {
+    ClearIndent();
+#>
+</body>
+</html>
+<#
+}
+#>
+<#@ include file="ModelMetadataFunctions.cs.include.t4" #>
