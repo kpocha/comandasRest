@@ -21,10 +21,8 @@ namespace Entidad.Migrations
                 c => new
                     {
                         comandaId = c.Int(nullable: false, identity: true),
-                        userId = c.Int(nullable: false),
                         fecha = c.DateTime(nullable: false),
-                        user_userId = c.Int(nullable: false),
-                        user_userName = c.String(),
+                        nombreUsuario = c.String(),
                     })
                 .PrimaryKey(t => t.comandaId);
             
@@ -32,17 +30,15 @@ namespace Entidad.Migrations
                 "dbo.DetalleComandas",
                 c => new
                     {
-                        detalleComandaId = c.Int(nullable: false, identity: true),
-                        comandaId = c.String(),
+                        detalleComandasId = c.Int(nullable: false, identity: true),
+                        nombreComida = c.String(),
                         cantidad = c.Int(nullable: false),
-                        comanda_comandaId = c.Int(),
-                        producto_productosId = c.Int(),
+                        precio = c.Single(nullable: false),
+                        comandasId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.detalleComandaId)
-                .ForeignKey("dbo.Comandas", t => t.comanda_comandaId)
-                .ForeignKey("dbo.Productos", t => t.producto_productosId)
-                .Index(t => t.comanda_comandaId)
-                .Index(t => t.producto_productosId);
+                .PrimaryKey(t => t.detalleComandasId)
+                .ForeignKey("dbo.Comandas", t => t.comandasId)
+                .Index(t => t.comandasId);
             
             CreateTable(
                 "dbo.Productos",
@@ -62,12 +58,10 @@ namespace Entidad.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.DetalleComandas", "producto_productosId", "dbo.Productos");
             DropForeignKey("dbo.Productos", "categoriaId", "dbo.Categorias");
-            DropForeignKey("dbo.DetalleComandas", "comanda_comandaId", "dbo.Comandas");
+            DropForeignKey("dbo.DetalleComandas", "comandasId", "dbo.Comandas");
             DropIndex("dbo.Productos", new[] { "categoriaId" });
-            DropIndex("dbo.DetalleComandas", new[] { "producto_productosId" });
-            DropIndex("dbo.DetalleComandas", new[] { "comanda_comandaId" });
+            DropIndex("dbo.DetalleComandas", new[] { "comandasId" });
             DropTable("dbo.Productos");
             DropTable("dbo.DetalleComandas");
             DropTable("dbo.Comandas");
