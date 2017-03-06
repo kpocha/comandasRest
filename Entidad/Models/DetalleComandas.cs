@@ -15,5 +15,7 @@ namespace Web.Entidad.Models
 
         [ForeignKey("comandasId")]
         public virtual Comandas comanda { get; set; }
+        
+        
     }
 }
