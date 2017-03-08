@@ -6,7 +6,7 @@ namespace Web.Entidad
 {
     public class WebContext : DbContext
     {
-        public WebContext() : base("WebContext")
+        public WebContext() : base("DefaultConnection")
         {
             //Database.SetInitializer<WebContext>(new WebInitializer());
             //Configuration.LazyLoadingEnabled = false;

@@ -73,17 +73,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IUnitOfWork.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703041909123_Initial.cs" />
-    <Compile Include="Migrations\201703041909123_Initial.Designer.cs">
-      <DependentUpon>201703041909123_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201703080322231_addInitial.cs" />
+    <Compile Include="Migrations\201703080322231_addInitial.Designer.cs">
+      <DependentUpon>201703080322231_addInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Categorias.cs" />
     <Compile Include="Models\Comandas.cs" />
     <Compile Include="Models\DetalleComandas.cs" />
-    <Compile Include="Models\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="Models\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="Models\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Models\Productos.cs" />
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,8 +133,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703041909123_Initial.resx">
-      <DependentUpon>201703041909123_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703080322231_addInitial.resx">
+      <DependentUpon>201703080322231_addInitial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

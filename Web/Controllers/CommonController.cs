@@ -13,6 +13,9 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="msg">Mensaje</param>
         /// <param name="type">tipo, usar:  success, error</param>
+        /// 
+
+      
         public void SetTempData(string msg, string type = "success")
         {
             TempData["message"] = msg;
