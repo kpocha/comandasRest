@@ -34,7 +34,7 @@ namespace Web.Controllers
             return lista;
 
         }
-        public ActionResult listaPedido()
+        public ActionResult Index()
         {
             UnitOfWork uow = new UnitOfWork();
             var asd = uow.ComandasRepository.All().ToList();
@@ -43,15 +43,18 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult agregarComanda(ComandaModel model)
         {
-           UnitOfWork uow = new UnitOfWork();
+            UnitOfWork uow = new UnitOfWork();
+
             Comandas comanda = new Comandas
             {
-                nombreUsuario = "carlitos",
+                nombreUsuario = User.Identity.Name,
+                precioTotal = model.listaPedido.Sum(a => a.precio),
                 fecha = DateTime.Now
             };
             var com = uow.ComandasRepository.Create(comanda);
             uow.ComandasRepository.Save();
-            foreach(var comida in model.listaPedido)
+
+            foreach (var comida in model.listaPedido)
             {
                 DetalleComandas detalleComida = new DetalleComandas();
                 detalleComida.cantidad = comida.cantidad;
@@ -60,7 +63,7 @@ namespace Web.Controllers
                 detalleComida.precio = comida.precio;
                 var comida2 = uow.DetalleComandasRepository.Create(detalleComida);
                 uow.DetalleComandasRepository.Save();
-                
+
             }
             SetTempData("Pedido cargado con exito");
             return RedirectToAction("/listapedido");
@@ -68,7 +71,9 @@ namespace Web.Controllers
         // GET: Comandas
         public ActionResult NuevaComanda()
         {
+
             ViewData["categoriaId"] = listaCategorias();
+            var listaSPedidos = (List<ProductosPedidos>)Session["listaPedidos"];
             ViewBag.contador = 0;
             return View();
         }
@@ -85,10 +90,31 @@ namespace Web.Controllers
             }
             return View(comandas);
         }
+        public ActionResult ListaPedidos(int productoId)
+        {
+            if (Session["listaPedidos"] == null)
+            {
+                Session["listaPedidos"] = new List<ProductosPedidos>();
+            }
+            var lista = (List<ProductosPedidos>)Session["listaPedidos"];
+            var producto = unitOfWork.ProductosRepository.Find(a => a.productosId == productoId);
+            var cantidad = lista.Count(a => a.productoPedidoId == producto.productosId) == 0 ? 1 : lista.Count(a => a.productoPedidoId == producto.productosId);
+
+            lista.Add(new ProductosPedidos()
+            {
+                productoPedidoId = producto.productosId,
+                nombre = producto.detalle,
+                cantidad = lista != null ? lista.Any(a => a.productoPedidoId == producto.productosId) ? cantidad++ : cantidad : cantidad,
+                precio = producto.precio * (lista != null ? lista.Any(a => a.productoPedidoId == producto.productosId) ? cantidad++ : cantidad : cantidad)
+            });
+
+            Session["listaPedidos"] = lista;
+            return PartialView("_partialListaPedidos", lista);
+        }
         public ActionResult listaProductos(int? categoriaId)
         {
             var lista = unitOfWork.ProductosRepository.Filter(x => x.categoriaId == categoriaId);
-            return PartialView("_partialProductos",lista.ToList());
+            return PartialView("_partialProductos", lista.ToList());
         }
         // GET: Comandas/Details/5
         public ActionResult Details(int? id)
@@ -118,21 +144,24 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "comandaId,userId,fecha,user")] Comandas comandas)
         {
-            try{
+            try
+            {
                 if (ModelState.IsValid)
                 {
-                    
+
                     unitOfWork.ComandasRepository.Create(comandas);
                     unitOfWork.ComandasRepository.Save();
-                    
+
                     MessageSuccess("Comandas guardado con exito!");
                     return RedirectToAction("Index");
                 }
-            }catch(Exception e){
-            MessageError("Ha ocurrido un error", e);  
-                          
             }
-            return View(comandas); 
+            catch (Exception e)
+            {
+                MessageError("Ha ocurrido un error", e);
+
+            }
+            return View(comandas);
         }
 
         // GET: Comandas/Edit/5
@@ -157,29 +186,32 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "comandaId,userId,fecha,user")] Comandas comandas)
         {
-            
-                if (ModelState.IsValid)
+
+            if (ModelState.IsValid)
+            {
+                try
                 {
-                    try{
-                        unitOfWork.ComandasRepository.Update(comandas);
-                        unitOfWork.ComandasRepository.Save();
-             
-                        MessageSuccess("Comandas guardado con exito!");
-                        return RedirectToAction("Index");
-                    }catch(Exception e){
-                        MessageError("Ha ocurrido un error", e);  
-                    }
+                    unitOfWork.ComandasRepository.Update(comandas);
+                    unitOfWork.ComandasRepository.Save();
+
+                    MessageSuccess("Comandas guardado con exito!");
+                    return RedirectToAction("Index");
                 }
-            
-         return View(comandas);
-            
+                catch (Exception e)
+                {
+                    MessageError("Ha ocurrido un error", e);
+                }
+            }
+
+            return View(comandas);
+
         }
 
         // GET: Comandas/Delete/5
         public ActionResult Delete(int? id)
         {
             try
-            {          
+            {
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -187,14 +219,16 @@ namespace Web.Controllers
                 Comandas comandas = unitOfWork.ComandasRepository.Find(x => x.comandasId == id);
                 unitOfWork.ComandasRepository.Delete(comandas);
                 unitOfWork.ComandasRepository.Save();
-                
+
                 if (comandas == null)
                 {
                     return HttpNotFound();
                 }
                 MessageSuccess("Comandas eliminado con exito!");
-            }catch(Exception e){
-                 MessageError("Ha ocurrido un error", e);               
+            }
+            catch (Exception e)
+            {
+                MessageError("Ha ocurrido un error", e);
             }
             return RedirectToAction("listaPedido");
         }

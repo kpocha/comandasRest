@@ -229,7 +229,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -270,9 +272,10 @@
     <Content Include="Views\Comandas\Details.cshtml" />
     <Content Include="Views\Comandas\DetalledeComanda.cshtml" />
     <Content Include="Views\Comandas\Edit.cshtml" />
-    <Content Include="Views\Comandas\listaPedido.cshtml" />
+    <Content Include="Views\Comandas\Index.cshtml" />
     <Content Include="Views\Comandas\NuevaComanda.cshtml" />
     <Content Include="Views\Comandas\_partialProductos.cshtml" />
+    <Content Include="Views\Comandas\_PartialListaPedidos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

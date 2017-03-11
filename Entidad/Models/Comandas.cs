@@ -12,6 +12,7 @@ namespace Web.Entidad.Models
         public int comandasId { get; set; }
         //public int userId { get; set; }
         public DateTime fecha { get; set; }
+        public float precioTotal { get; set; }
         public string nombreUsuario { get; set; }
 
         /*  [ForeignKey("userId")]

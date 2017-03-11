@@ -73,7 +73,11 @@
                         <tr><th>Nombre</th><th>Cantidad</th><th>Precio</th></tr>
                         @foreach (var comida in Model.detalleComanda)
                         {
-                            <tr><td>@comida.nombreComida</td><td></td><td></td></tr>
+                            <tr>
+                                <td>@comida.nombreComida</td>
+                                <td>@comida.cantidad</td>
+                                <td>@comida.precio</td>
+                            </tr>
                         }
                     </table>
 

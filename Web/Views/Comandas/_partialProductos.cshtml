@@ -13,10 +13,11 @@
             </tr>
             <tbody>
                 @foreach (var comida in Model)
-            {
+                {
+                
                     <tr>
                         <td>
-                            <button class="btn btn-labeled btn-default" type="button" onclick="agregar(@comida.productosId,'@comida.detalle',@comida.precio)">
+                            <button class="btn btn-labeled btn-default" type="button" onclick="agregarPedido(@comida.productosId)">
                                 <span class="btn-label span-icon-md">
                                     <i class="fa fa-plus"></i>
                                 </span>
