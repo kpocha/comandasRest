@@ -8,6 +8,7 @@ namespace Web.Controllers
 {
     public class HomeController : CommonController
     {
+        [Authorize]
         public ActionResult Index()
         {
             return View();

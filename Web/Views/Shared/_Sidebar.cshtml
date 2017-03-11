@@ -1,0 +1,199 @@
+<!-- START Sidebar (left)-->
+<div class="aside-inner">
+    <nav class="sidebar" data-sidebar-anyclick-close="">
+        <!-- START sidebar nav-->
+        <ul class="nav">
+            <!-- START user info-->
+            <li class="has-user-block">
+                <div id="user-block" class="in">
+                    <div class="item user-block">
+                        <!-- User picture-->
+                        <div class="user-block-picture">
+                            <div class="user-block-status">
+
+                            </div>
+                        </div>
+                        <!-- Name and Job-->
+                        <div class="user-block-info">
+                            <div class="col-md-12">
+                                <a href="/Manage/Index"><img src="~/Content/Images/user/user-icon.png" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle" /></a>
+                                <br />
+                                @Html.Partial("_LoginPartial")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!-- END user info-->
+            <!-- Iterates over all sidebar items-->
+            <li>
+                <hr />
+            </li>
+            <li class="nav-heading">
+                <span>Menú</span>
+            </li>
+            @*<li class="@Html.isActive(controllers: new string[] { "Rubro", "Unidad", "Marca", "Articulo", "CondicionIva", "Account", "Personas" })">
+                <a href="#configuracion" title="Configuracion" data-toggle="collapse">
+                    <em class="icon-wrench"></em>
+                    <span data-localize="sidebar.nav.CONFIGURACION">Configuración</span>
+                </a>
+                <ul id="configuracion" class="nav sidebar-subnav collapse">
+                    <li class="sidebar-subnav-header">Configuración</li>
+
+                    <li class="@Html.isActive(controller:"Articulo", actions: new string[] { "Index", "Create", "Edit", "Detail" })">
+                        <a href="@Url.Action("Index", "Articulo")" title="Articulos">
+                            <em class="icon-grid"></em>
+                            <span>Articulos</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller:"Articulo", actions: new string[] { "ListListaPrecio", "CreateListaPrecio", "DeleteListaPrecio", "DetailsListaPrecio", "EditListaPrecio" })">
+                        <a href="@Url.Action("ListListaPrecio", "Articulo")" title="Listas de Precios">
+                            <em class="icon-grid"></em>
+                            <span>Listas de Precios</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller:"Marca", action:null)">
+                        <a href="@Url.Action("Index", "Marca")" title="Marca">
+                            <em class="icon-grid"></em>
+                            <span>Marca</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller:"Rubro", action:null)">
+                        <a href="@Url.Action("Index", "Rubro")" title="Rubro">
+                            <em class="icon-grid"></em>
+                            <span>Rubro</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller:"Unidad", action:null)">
+                        <a href="@Url.Action("Index", "Unidad")" title="Unidad">
+                            <em class="icon-grid"></em>
+                            <span>Unidad</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller:"CondicionIva", action:null)">
+                        <a href="@Url.Action("Index", "CondicionIva")" title="CondicionIva">
+                            <em class="icon-grid"></em>
+                            <span>Condicion Iva</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller: "Sucursal",action:null)">
+                        <a href="@Url.Action("Index","Sucursal")" title="Sucursal">
+                            <em class="icon-grid"></em>
+                            <span>Sucursal</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller: "Deposito",action:null)">
+                        <a href="@Url.Action("Index","Deposito")" title="Depósito">
+                            <em class="icon-grid"></em>
+                            <span>Depósito</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller:"Caja", action: null)">
+                        <a href="@Url.Action("Index","Caja")" title="Cajas">
+                            <em class="icon-grid"></em>
+                            <span>Caja</span>
+                        </a>
+                    </li>
+                            
+                    <li class="@Html.isActive(controller:"Account", action:null)">
+                        <a href="@Url.Action("ListUsers","Account")" title="Usuarios">
+                            <em class="icon-people"></em>
+                            <span>Usuarios</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller:"Account", action:null)">
+                        <a href="@Url.Action("ListRole","Account")" title="Perfiles">
+                            <em class="icon-people"></em>
+                            <span>Perfiles</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive("Personas", new string[] { "ListClientes", "DetailCliente", "CreateCliente", "EditCliente" })">
+                        <a href="@Url.Action("ListClientes","Personas")" title="Clientes">
+                            <em class="icon-people"></em>
+                            <span>Clientes</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller: "Log", action: null )">
+                        <a href="@Url.Action("ListLog","Log")" title="Lista Logs">
+                            <em class="icon-people"></em>
+                            <span>Logs de Usuarios</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive("Personas", new string[] { "ListCobrador", "DetailCobrador", "CreateCobrador", "EditCobrador" })">
+                        <a href="@Url.Action("ListCobrador","Personas")" title="Cobradores">
+                            <em class="icon-people"></em>
+                            <span>Cobradores</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive("Personas", new string[] { "ListProveedores", "DetailProveedor", "CreateProveedor", "EditProveedor" })">
+                        <a href="@Url.Action("ListProveedores","Personas")" title="Proveedores">
+                            <em class="icon-people"></em>
+                            <span>Proveedores</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller:"Zona", action: null)">
+                        <a href="@Url.Action("Index","Zona")" title="Zonas">
+                            <em class="icon-map"></em>
+                            <span>Zona</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="@Html.isActive(controllers: new string[] { "Transaccion", "AutorizacionTransaccion" })">
+                <a href="#ventas" title="Ventas" data-toggle="collapse">
+                    <em class="fa fa-shopping-cart"></em>
+                    <span data-localize="sidebar.nav.VENTAS">Gestión Ventas</span>
+                </a>
+                <ul id="ventas" class="nav sidebar-subnav collapse">
+                    <li class="sidebar-subnav-header">Ventas</li>
+                    <li class="@Html.isActive(controller:"Transaccion   ", action:null)">
+                        <a href="@Url.Action("IndexVenta","Transaccion")" title="Ventas">
+                            <em class="fa fa-shopping-cart"></em>
+                            <span>Ventas</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller:"AutorizacionTransaccion", action:null)">
+                        <a href="@Url.Action("Index", "AutorizacionTransaccion")" title="Autorizar Ventas">
+                            <em class="fa fa-check-circle" aria-hidden="true"></em>
+                            <span>Autorizar Ventas</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive("MovimientoCuentas","ManejoCuentaCorriente")">
+                        <a href="@Url.Action("ManejoCuentaCorriente","MovimientoCuentas")" title="Cuenta corriente de clientes">
+                            <em class="icon-people"></em>
+                            <span>Cuenta Corriente Cliente</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="@Html.isActive(controllers: new string[] { "Compra" })">
+                <a href="#compras" title="Compras" data-toggle="collapse">
+                    <em class="fa fa-barcode"></em>
+                    <span data-localize="sidebar.nav.Compras">Gestión Compras</span>
+                </a>
+                <ul id="compras" class="nav sidebar-subnav collapse">
+                    <li class="sidebar-subnav-header">Compras</li>
+                    <li class="@Html.isActive(controller:"Compra   ", action:null)">
+                        <a href="@Url.Action("Index","Compra")" title="Compra">
+                            <em class="fa fa-barcode"></em>
+                            <span>Compras</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive("MovimientoCuentas","CuentaCorrienteProveedor")">
+                        <a href="@Url.Action("CuentaCorrienteProveedor","MovimientoCuentas")" title="Cuenta corriente de proveedores">
+                            <em class="icon-people"></em>
+                            <span>Cuenta Corriente Proveedores</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a title="Stock" href="@Url.Action("ManejoStock", "MovimientoArticulos")"><em class="fa fa-truck "></em>Stock</a>  
+            </li>*@
+
+        
+            <!-- END sidebar nav-->
+        </ul>
+    </nav>
+</div>
+<!-- END Sidebar (left)-->
