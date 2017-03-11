@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Web.Entidad.Models.Comandas>
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Comanda";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var numeroFilas = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["rowGrid"]);
+    var listaPedidos = (List<Web.Models.ProductosPedidos>)Session["listaPedidos"];
+}
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @Html.DropDownList("categoriaId", null, "ninguna", new { @class = "form-control", @onchange = "choose(this.value)" })
+    </div>
+    <div class="col-md-8 productos"></div>
+</div>
+<br />
+<hr />
+
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form id="formu" method="post" action="@Url.Action("agregarComanda","Comandas")">
+            <div id="tablaPedidos">
+                @*@Html.Partial("_PartialListaPedidos", listaPedidos)*@
+            </div>
+            <input type="hidden" name="usuarioId" value="1" />
+            <input type="submit" value="enviar" />
+        </form>
+</div>
+
+
+    
+        
+
+
+</div>
+@section Scripts{
+    <script type="text/javascript">
+
+        var contador = 0;
+        function agregarPedido(idProducto) {
+            $.ajax({
+                url: '@Url.Action("ListaPedidos", "Comandas")',
+                data: { productoId: idProducto }
+
+            }).done(function (data) {
+                $("#tablaPedidos").html(data); 
+            });
+        }
+        //function agregar(id, nombre, precio) {
+        //    $(".tabla").show();
+        //    //console.log(id + nombre + precio)
+        //    // $(".tabla tbody tr").find(function () {
+        //    $(".filtro").each(function () {
+
+        //        if ($(this).text() == nombre) {
+        //            $(".tabla tbody tr .cant").text(2)
+        //        }
+        //        else {
+        //            //  $(".tabla>tbody").append("<tr><td class='filtro'>" + nombre + "</td><td class='cant'></td><td>" + precio + "</td><td><button class='btn btn-danger'><span><i class='fa fa-times'></i></span></button></td></tr>")
+        //        }
+        //    })
+        //    //});
+        //    $(".tabla>tbody").append("<tr><td class='filtro'>" + nombre + "</td><td class='cant'></td><td>" + precio + "</td><td><button class='btn btn-danger'><span><i class='fa fa-times'></i></span></button></td></tr>")
+        //    $("#formu").append("<input type='hidden' name=listaPedido[" + contador + "].nombre value='" + nombre + "'>")
+        //    $("#formu").append("<input type='hidden' name=listaPedido[" + contador + "].precio value='" + precio + "'>")
+        //    $("#formu").append("<input type='hidden' name=listaPedido[" + contador + "].nombre value='" + nombre + "'>")
+        //    //console.log($(".tabla>tbody>tr").index())
+        //    contador = contador + 1;
+        //}
+
+        function choose(categoriaId) {
+
+            $.ajax({
+                url: '@Url.Action("listaProductos", "Comandas")',
+                data: { categoriaId: categoriaId }
+
+            }).done(function (data) {
+                $(".productos").html(data)
+            });
+        }
+    </script>
+
+}

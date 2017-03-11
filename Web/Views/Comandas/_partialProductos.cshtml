@@ -1,0 +1,34 @@
+﻿@model List<Web.Entidad.Models.Productos>
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Lista de Comidas</div>
+    <div class="panel-body">
+     
+
+        <table class="table table-condensed">
+            <tr>
+                <th>Nombre</th>
+                <th>precio</th>
+            </tr>
+            <tbody>
+                @foreach (var comida in Model)
+                {
+                
+                    <tr>
+                        <td>
+                            <button class="btn btn-labeled btn-default" type="button" onclick="agregarPedido(@comida.productosId)">
+                                <span class="btn-label span-icon-md">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                                @comida.detalle
+                            </button>
+                        </td>
+                        <td>@comida.precio</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    </div>
+

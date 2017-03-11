@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Bootstrap Admin App + jQuery">
+    <meta name="keywords" content="app, responsive, jquery, bootstrap, dashboard, admin">
+    <link rel="shortcut icon" href="~/Content/Images/icon.png">
+    <title>Resto Dev</title>
+    <!-- =============== VENDOR STYLES ===============-->
+    @Styles.Render("~/bundles/fontawesome")
+    @Styles.Render("~/bundles/simpleLineIcons")
+    @Styles.Render("~/bundles/animatecss")
+    @Styles.Render("~/bundles/whirl")
+    @Styles.Render("~/bundles/SweetAlertCss")
+    @Styles.Render("~/bundles/bootstrapDatepickerCss")
+    <!-- =============== PAGE VENDOR STYLES =============== -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+    <!-- =============== BOOTSTRAP STYLES ===============-->
+    <link href="@Styles.Url("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" id="bscss" />
+    <!-- =============== APP STYLES ===============-->
+    <link href="@Styles.Url("~/Content/app/css/app.css")" rel="stylesheet" type="text/css" id="maincss" />
+    <link href="@Styles.Url("~/Content/mvc-override.css")" rel="stylesheet" type="text/css" />
+
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/bundles/jqueryUiCss")
+    @Scripts.Render("~/bundles/jquery")
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <!-- top navbar-->
+        <header class="topnavbar-wrapper">
+            @Html.Partial("_TopNavbar")
+        </header>
+        <!-- sidebar-->
+        <aside class="aside">
+            @Html.Partial("_Sidebar")
+        </aside>
+        <!-- offsidebar-->
+        <aside class="offsidebar hide">
+            @Html.Partial("_Offsidebar")
+        </aside>
+        <!-- Main section-->
+        <section>
+            <!-- Page content-->
+            <div class="content-wrapper">
+                @RenderBody()
+            </div>
+        </section>
+        <!-- Page footer-->
+        <footer>
+            @Html.Partial("_Footer")
+        </footer>
+    </div>
+    <input type="hidden" name="base_url" id="base_url" />
+    @if (IsSectionDefined("BodyArea"))
+    {@RenderSection("BodyArea", required: false)}
+    <!-- =============== VENDOR SCRIPTS ===============-->
+    @Scripts.Render("~/bundles/modernizr")
+    @*@Scripts.Render("~/bundles/matchMedia")*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/storage")
+    @Scripts.Render("~/bundles/jqueryEasing")
+    @Scripts.Render("~/bundles/jqueryUi")
+    @*@Scripts.Render("~/bundles/animo")*@
+    @Scripts.Render("~/bundles/slimscroll")
+    @Scripts.Render("~/bundles/screenfull")
+    @Scripts.Render("~/bundles/localize")
+    @*@Scripts.Render("~/bundles/demoRTL")*@
+    @Scripts.Render("~/bundles/Angle")
+    @Scripts.Render("~/bundles/SweetAlert")
+    @Scripts.Render("~/bundles/Utils")
+    @Scripts.Render("~/bundles/bootstrapDatepicker")
+    @Scripts.Render("~/bundles/Parsley")
+    
+    @*@Scripts.Render("~/bundles/GridMvc")*@
+    @*<script src="~/MVCGridHandler.axd/script.js"></script>*@
+    <script src="~/Scripts/gridmvc.js"></script>
+    <!-- =============== PAGE VENDOR SCRIPTS ===============-->
+    @RenderSection("scripts", required: false)
+    <!-- =============== APP SCRIPTS ===============-->
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            pathArray = location.href.split('/');
+            protocol = pathArray[0];
+            host = pathArray[2];
+            url = protocol + '//' + host;
+            $("#base_url").val(url)
+            $(".bootstrap-date").wrap("<div class='input-group date'></div>");
+            $(".bootstrap-date").after("<span class='input-group-addon'><i class='fa fa-calendar'></i></span>");
+            $(".input-group.date").datepicker({
+                language: "es",
+                autoclose: true
+            });
+            $("select").addClass("form-control");
+            @foreach(var i in TempData.Keys)
+            {
+                var value = TempData[i];
+                if (value != null && ( value.Equals("error") || value.Equals("info") || value.Equals("success") || value.Equals("warning")))
+                {
+                    if (TempData[i].ToString().Equals("error"))
+                    {
+                        @:nError("@Html.Raw(TempData["message"].ToString())", "@Html.Raw(TempData["type"].ToString())");
+                                                        }
+                    if (TempData[i].ToString().Contains("success"))
+                    {
+                        @:nSuccess('@Html.Raw(TempData["message"].ToString())', "@Html.Raw(TempData["type"].ToString())");
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
