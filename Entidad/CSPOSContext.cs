@@ -8,7 +8,7 @@ namespace Web.Entidad
     {
         public WebContext() : base("DefaultConnection")
         {
-            //Database.SetInitializer<WebContext>(new WebInitializer());
+            Database.SetInitializer<WebContext>(new WebInitializer());
             //Configuration.LazyLoadingEnabled = false;
             //Configuration.ProxyCreationEnabled = false;
         }

@@ -3,7 +3,7 @@ namespace Entidad.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class addInitial : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -20,11 +20,11 @@ namespace Entidad.Migrations
                 "dbo.Comandas",
                 c => new
                     {
-                        comandasId = c.Int(nullable: false, identity: true),
+                        comandaId = c.Int(nullable: false, identity: true),
                         fecha = c.DateTime(nullable: false),
                         nombreUsuario = c.String(),
                     })
-                .PrimaryKey(t => t.comandasId);
+                .PrimaryKey(t => t.comandaId);
             
             CreateTable(
                 "dbo.DetalleComandas",

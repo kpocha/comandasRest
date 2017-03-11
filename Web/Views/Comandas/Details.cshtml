@@ -59,7 +59,7 @@
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-left">
-        @Html.ActionLink("Editar", "Edit", null, new { id = Model.comandasId }, new { @class = "btn btn-info marginlg" }) &nbsp;
+        @Html.ActionLink("Editar", "Edit", null, new { id = Model.comandaId }, new { @class = "btn btn-info marginlg" }) &nbsp;
     </div>
 </div>
     
@@ -73,7 +73,11 @@
                         <tr><th>Nombre</th><th>Cantidad</th><th>Precio</th></tr>
                         @foreach (var comida in Model.detalleComanda)
                         {
-                            <tr><td>@comida.nombreComida</td><td></td><td></td></tr>
+                            <tr>
+                                <td>@comida.nombreComida</td>
+                                <td>@comida.cantidad</td>
+                                <td>@comida.precio</td>
+                            </tr>
                         }
                     </table>
 
