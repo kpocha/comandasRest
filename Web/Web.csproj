@@ -454,11 +454,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
-    <Content Include="Views\Comandas\Create.cshtml" />
     <Content Include="Views\Comandas\Delete.cshtml" />
     <Content Include="Views\Comandas\Details.cshtml" />
     <Content Include="Views\Comandas\DetalledeComanda.cshtml" />
-    <Content Include="Views\Comandas\Edit.cshtml" />
     <Content Include="Views\Comandas\Index.cshtml" />
     <Content Include="Views\Comandas\NuevaComanda.cshtml" />
     <Content Include="Views\Comandas\_partialProductos.cshtml" />

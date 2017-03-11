@@ -58,7 +58,7 @@ namespace Web.Controllers
             {
                 DetalleComandas detalleComida = new DetalleComandas();
                 detalleComida.cantidad = comida.cantidad;
-                detalleComida.comandasId = com.comandasId;
+                detalleComida.comandasId = com.comandaId;
                 detalleComida.nombreComida = comida.nombre;
                 detalleComida.precio = comida.precio;
                 var comida2 = uow.DetalleComandasRepository.Create(detalleComida);
@@ -66,7 +66,7 @@ namespace Web.Controllers
 
             }
             SetTempData("Pedido cargado con exito");
-            return RedirectToAction("/listapedido");
+            return RedirectToAction("index");
         }
         // GET: Comandas
         public ActionResult NuevaComanda()
@@ -83,7 +83,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comandas comandas = unitOfWork.ComandasRepository.Find(x => x.comandasId == comandasId);
+            Comandas comandas = unitOfWork.ComandasRepository.Find(x => x.comandaId == comandasId);
             if (comandas == null)
             {
                 return HttpNotFound();
@@ -123,7 +123,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comandas comandas = unitOfWork.ComandasRepository.Find(x => x.comandasId == id);
+            Comandas comandas = unitOfWork.ComandasRepository.Find(x => x.comandaId == id);
             if (comandas == null)
             {
                 return HttpNotFound();
@@ -171,7 +171,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comandas comandas = unitOfWork.ComandasRepository.Find(x => x.comandasId == id);
+            Comandas comandas = unitOfWork.ComandasRepository.Find(x => x.comandaId == id);
             if (comandas == null)
             {
                 return HttpNotFound();
@@ -216,7 +216,7 @@ namespace Web.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                Comandas comandas = unitOfWork.ComandasRepository.Find(x => x.comandasId == id);
+                Comandas comandas = unitOfWork.ComandasRepository.Find(x => x.comandaId == id);
                 unitOfWork.ComandasRepository.Delete(comandas);
                 unitOfWork.ComandasRepository.Save();
 

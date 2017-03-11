@@ -3,7 +3,7 @@ namespace Entidad.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class addInitial : DbMigration
     {
         public override void Up()
         {
@@ -22,6 +22,7 @@ namespace Entidad.Migrations
                     {
                         comandaId = c.Int(nullable: false, identity: true),
                         fecha = c.DateTime(nullable: false),
+                        precioTotal = c.Single(nullable: false),
                         nombreUsuario = c.String(),
                     })
                 .PrimaryKey(t => t.comandaId);

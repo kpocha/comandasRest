@@ -73,13 +73,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IUnitOfWork.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703080322231_addInitial.cs" />
-    <Compile Include="Migrations\201703080322231_addInitial.Designer.cs">
-      <DependentUpon>201703080322231_addInitial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703110528318_add-TotalPrecio.cs" />
-    <Compile Include="Migrations\201703110528318_add-TotalPrecio.Designer.cs">
-      <DependentUpon>201703110528318_add-TotalPrecio.cs</DependentUpon>
+    <Compile Include="Migrations\201703110712180_addInitial.cs" />
+    <Compile Include="Migrations\201703110712180_addInitial.Designer.cs">
+      <DependentUpon>201703110712180_addInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Categorias.cs" />
@@ -137,11 +133,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703080322231_addInitial.resx">
-      <DependentUpon>201703080322231_addInitial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703110528318_add-TotalPrecio.resx">
-      <DependentUpon>201703110528318_add-TotalPrecio.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703110712180_addInitial.resx">
+      <DependentUpon>201703110712180_addInitial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
