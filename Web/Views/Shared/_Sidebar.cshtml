@@ -32,6 +32,19 @@
             <li class="nav-heading">
                 <span>Menú</span>
             </li>
+            <li class="@Html.isActive("Comandas", "Index")">
+                <a href="@Url.Action("Index", "Comandas")" title="Lista Comandas">
+                    <em class="icon-pencil"></em>
+                    <span>Lista Pedidos</span>
+                </a>
+            </li>
+                <li class="@Html.isActive("Comandas", "NuevaComanda")">
+                    <a href="@Url.Action("NuevaComanda", "Comandas")" title="Lista Comandas">
+                        <em class="icon-pencil"></em>
+                        <span>Nuevo Pedido</span>
+                    </a>
+            </li>
+         
             @*<li class="@Html.isActive(controllers: new string[] { "Rubro", "Unidad", "Marca", "Articulo", "CondicionIva", "Account", "Personas" })">
                 <a href="#configuracion" title="Configuracion" data-toggle="collapse">
                     <em class="icon-wrench"></em>

@@ -191,6 +191,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ComandaModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -234,6 +235,7 @@
     <Content Include="Content\Images\bootstrap-colorpicker\hue.png" />
     <Content Include="Content\Images\bootstrap-colorpicker\saturation.png" />
     <Content Include="Content\Images\dummy.png" />
+    <Content Include="Content\Images\fondo.jpg" />
     <Content Include="Content\Images\icon.png" />
     <Content Include="Content\Images\lock-bg.jpg" />
     <Content Include="Content\Images\logo-single.png" />
@@ -241,6 +243,7 @@
     <Content Include="Content\Images\mb-sample.jpg" />
     <Content Include="Content\Images\mockup.png" />
     <Content Include="Content\Images\profile-bg.jpg" />
+    <Content Include="Content\Images\Sin-título-1.jpg" />
     <Content Include="Content\Images\user\01.jpg" />
     <Content Include="Content\Images\user\02.jpg" />
     <Content Include="Content\Images\user\03.jpg" />
@@ -331,6 +334,7 @@
     <Content Include="fonts\Simple-Line-Icons.ttf" />
     <Content Include="fonts\Simple-Line-Icons.woff" />
     <Content Include="fonts\Simple-Line-Icons.woff2" />
+    <None Include="Properties\PublishProfiles\Juan.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />

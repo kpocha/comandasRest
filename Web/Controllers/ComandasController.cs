@@ -44,7 +44,7 @@ namespace Web.Controllers
         public ActionResult agregarComanda(ComandaModel model)
         {
             UnitOfWork uow = new UnitOfWork();
-
+            try { 
             Comandas comanda = new Comandas
             {
                 nombreUsuario = User.Identity.Name,
@@ -65,8 +65,16 @@ namespace Web.Controllers
                 uow.DetalleComandasRepository.Save();
 
             }
+            
+            Session["listaPedidos"] = null;
             SetTempData("Pedido cargado con exito");
             return RedirectToAction("index");
+            }
+            catch(Exception e)
+            {
+                SetTempData("Ha ocurrido un error al cargar el pedido", "error");
+                return RedirectToAction("index");
+            }
         }
         // GET: Comandas
         public ActionResult NuevaComanda()
@@ -217,6 +225,12 @@ namespace Web.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 Comandas comandas = unitOfWork.ComandasRepository.Find(x => x.comandaId == id);
+                var detalles = unitOfWork.DetalleComandasRepository.Filter(x => x.comandasId == id).ToList();
+                foreach( var detalle in detalles)
+                {
+                    unitOfWork.DetalleComandasRepository.Delete(detalle);
+                }
+                
                 unitOfWork.ComandasRepository.Delete(comandas);
                 unitOfWork.ComandasRepository.Save();
 
@@ -225,12 +239,14 @@ namespace Web.Controllers
                     return HttpNotFound();
                 }
                 MessageSuccess("Comandas eliminado con exito!");
+                return RedirectToAction("index");
             }
             catch (Exception e)
             {
                 MessageError("Ha ocurrido un error", e);
+                return RedirectToAction("index");
             }
-            return RedirectToAction("listaPedido");
+   
         }
 
         /*protected override void Dispose(bool disposing)
