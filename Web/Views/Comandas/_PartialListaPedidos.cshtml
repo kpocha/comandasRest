@@ -1,35 +1,46 @@
 ﻿@model List<Web.Models.ProductosPedidos>
 
 <div class="col-md-12">
-@if (Model != null && Model.Count > 0)
-{
-    var contador = 0;
-    <table>
-        <thead>
-            <tr>
-                <th>Comida</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var p in Model.GroupBy(a => a.productoPedidoId))
-            {
-                <tr>
-                    <input type="hidden" name="listaPedido[@contador].productoPedidoId" value="@p.First().productoPedidoId">
-                    <input type="hidden" name="listaPedido[@contador].nombre" value="@p.First().nombre">
-                    <input type="hidden" name="listaPedido[@contador].cantidad" value="@p.Count(a => a.productoPedidoId == p.First().productoPedidoId)">
-                    <input type="hidden" name="listaPedido[@contador].precio" value="@p.Last().precio">
-                        @* <td><input type="hidden" name="listaPedido @contador].nombre" value="nombre"></td>*@
-                    <td>@p.First().nombre</td>
-                    <td>@p.Count(a => a.productoPedidoId == p.First().productoPedidoId)</td>
-                    <td>@p.Last().precio</td>
-                    <td><span class="glyphicon-trash text-danger"></span></td>
-                </tr>
-                contador++;
-            }
-        </tbody>
-    </table>
-}
+    @if (Model != null && Model.Count > 0)
+    {
+        var contador = 0;
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">Lista de Comidas</div>
+            <div class="panel-body">
+
+                <table class="tabla table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Comida</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Model.GroupBy(a => a.productoPedidoId))
+                        {
+                            <tr>
+
+                                @* <td><input type="hidden" name="listaPedido @contador].nombre" value="nombre"></td>*@
+                                <td>@p.First().nombre</td>
+                                <td>@p.Count(a => a.productoPedidoId == p.First().productoPedidoId)</td>
+                                <td>@p.Last().precio</td>
+                                <td>
+                                    <button class="btn btn-danger" id="borrar"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <input type="hidden" id="campo" data-id="@contador" name="listaPedido[@contador].productoPedidoId" value="@p.First().productoPedidoId">
+                                    <input type="hidden" id="campo" data-id="@contador" name="listaPedido[@contador].nombre" value="@p.First().nombre">
+                                    <input type="hidden" id="campo" data-id="@contador" name="listaPedido[@contador].cantidad" value="@p.Count(a => a.productoPedidoId == p.First().productoPedidoId)">
+                                    <input type="hidden" id="campo" data-id="@contador" name="listaPedido[@contador].precio" value="@p.Last().precio">
+                                </td>
+                            </tr>
+                            contador++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
 </div>
+

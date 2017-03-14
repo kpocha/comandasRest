@@ -8,7 +8,7 @@
     var listaPedidos = (List<Web.Models.ProductosPedidos>)Session["listaPedidos"];
 }
 
-
+<h2>Nueva Comanda</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,30 +17,35 @@
     <div class="col-md-8 productos"></div>
 </div>
 <br />
-<hr />
 
-<hr />
+<h3> Pedido del cliente</h3>
+
 
 <div class="row">
     <div class="col-md-8">
         <form id="formu" method="post" action="@Url.Action("agregarComanda","Comandas")">
             <div id="tablaPedidos">
-                @*@Html.Partial("_PartialListaPedidos", listaPedidos)*@
+               
             </div>
-            <input type="hidden" name="usuarioId" value="1" />
-            <input type="submit" value="enviar" />
+           
+            <input type="submit" class="btn btn-default" value="Crear Pedido" />
         </form>
-</div>
-
-
-    
-        
+    </div>
 
 
 </div>
 @section Scripts{
     <script type="text/javascript">
 
+        $(function () {
+            $(document).on('click', '#borrar', function (event) {
+                var id = $(this).attr("data-cont");
+                $("#campo").attr("data-id", id).remove();
+                event.preventDefault();
+                $(this).closest('tr').remove();
+
+            });
+        });
         var contador = 0;
         function agregarPedido(idProducto) {
             $.ajax({
@@ -48,30 +53,10 @@
                 data: { productoId: idProducto }
 
             }).done(function (data) {
-                $("#tablaPedidos").html(data); 
+                $("#tablaPedidos").html(data);
             });
         }
-        //function agregar(id, nombre, precio) {
-        //    $(".tabla").show();
-        //    //console.log(id + nombre + precio)
-        //    // $(".tabla tbody tr").find(function () {
-        //    $(".filtro").each(function () {
 
-        //        if ($(this).text() == nombre) {
-        //            $(".tabla tbody tr .cant").text(2)
-        //        }
-        //        else {
-        //            //  $(".tabla>tbody").append("<tr><td class='filtro'>" + nombre + "</td><td class='cant'></td><td>" + precio + "</td><td><button class='btn btn-danger'><span><i class='fa fa-times'></i></span></button></td></tr>")
-        //        }
-        //    })
-        //    //});
-        //    $(".tabla>tbody").append("<tr><td class='filtro'>" + nombre + "</td><td class='cant'></td><td>" + precio + "</td><td><button class='btn btn-danger'><span><i class='fa fa-times'></i></span></button></td></tr>")
-        //    $("#formu").append("<input type='hidden' name=listaPedido[" + contador + "].nombre value='" + nombre + "'>")
-        //    $("#formu").append("<input type='hidden' name=listaPedido[" + contador + "].precio value='" + precio + "'>")
-        //    $("#formu").append("<input type='hidden' name=listaPedido[" + contador + "].nombre value='" + nombre + "'>")
-        //    //console.log($(".tabla>tbody>tr").index())
-        //    contador = contador + 1;
-        //}
 
         function choose(categoriaId) {
 
@@ -83,6 +68,7 @@
                 $(".productos").html(data)
             });
         }
+      
     </script>
 
 }

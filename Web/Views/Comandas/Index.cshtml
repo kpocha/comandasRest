@@ -19,16 +19,16 @@
 <div class="row">
     <div class="col-lg-12">
         @Html.Grid(Model).Columns(columns =>
-        {
-            columns.Add(a => a.comandaId).Titled("Número Comanda");
-            columns.Add(a => a.fecha).Titled("fecha").Filterable(true); //.RenderValueAs(d => (d.fecha == null ? "" : d.fecha)); //Put last method when value comes null.
-                  
-            columns.Add(a => a.nombreUsuario).Titled("MOZO").Filterable(true); //.RenderValueAs(d => (d.nombreUsuario == null ? "" : d.nombreUsuario)); //Put last method when value comes null.
-            
-			columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("DETALLE").RenderValueAs(d =>  @Html.ActionLink(" ", "Details", new { @id = d.comandaId }, new { @class = "icon-info text-info", @style = "margin-left:30%;" }));
-            columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("EDITAR").RenderValueAs(d =>  @Html.ActionLink(" ", "Edit", new { @id = d.comandaId}, new { @class = "icon-pencil text-warning", @style = "margin-left:30%;" }));
-            columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("ELIMINAR").RenderValueAs(d => @Html.ActionLink(" ", "Delete", new { @id = d.comandaId }, new { @class = "icon-trash text-danger swal-delete", @style = "margin-left:30%;" }));
-  }).SetLanguage("ES").WithPaging(15).Sortable().Filterable().WithMultipleFilters()
+   {
+       columns.Add(a => a.comandaId).Titled("Número");
+       columns.Add(a => a.fecha).Titled("fecha").Filterable(true); //.RenderValueAs(d => (d.fecha == null ? "" : d.fecha)); //Put last method when value comes null.
+       columns.Add(a => a.precioTotal).Titled("Monto").Filterable(true);
+       columns.Add(a => a.nombreUsuario).Titled("Mozo").Filterable(true); //.RenderValueAs(d => (d.nombreUsuario == null ? "" : d.nombreUsuario)); //Put last method when value comes null.
+
+       columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("DETALLE").RenderValueAs(d =>  @Html.ActionLink(" ", "Details", new { @id = d.comandaId }, new { @class = "icon-info text-info", @style = "margin-left:30%;" }));
+       columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("EDITAR").RenderValueAs(d =>  @Html.ActionLink(" ", "Edit", new { @id = d.comandaId}, new { @class = "icon-pencil text-warning", @style = "margin-left:30%;" }));
+       columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Titled("ELIMINAR").RenderValueAs(d => @Html.ActionLink(" ", "Delete", new { @id = d.comandaId }, new { @class = "icon-trash text-danger swal-delete", @style = "margin-left:30%;" }));
+   }).SetLanguage("ES").WithPaging(15).Sortable().Filterable().WithMultipleFilters()
     </div>
 </div>
 }
