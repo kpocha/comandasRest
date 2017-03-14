@@ -6,7 +6,7 @@
         var contador = 0;
 
         <div class="panel panel-primary">
-            <div class="panel-heading">Lista de Comidas</div>
+            <div class="panel-heading">Pedido Cliente</div>
             <div class="panel-body">
 
                 <table class="tabla table table-striped">
@@ -28,7 +28,7 @@
                                 <td>@p.Count(a => a.productoPedidoId == p.First().productoPedidoId)</td>
                                 <td>@p.Last().precio</td>
                                 <td>
-                                    <button class="btn btn-danger" id="borrar"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-danger" id="borrar" data-cont="@contador"><i class="fa fa-times" aria-hidden="true"></i></button>
                                     <input type="hidden" id="campo" data-id="@contador" name="listaPedido[@contador].productoPedidoId" value="@p.First().productoPedidoId">
                                     <input type="hidden" id="campo" data-id="@contador" name="listaPedido[@contador].nombre" value="@p.First().nombre">
                                     <input type="hidden" id="campo" data-id="@contador" name="listaPedido[@contador].cantidad" value="@p.Count(a => a.productoPedidoId == p.First().productoPedidoId)">

@@ -36,10 +36,16 @@
 </div>
 @section Scripts{
     <script type="text/javascript">
+        $(document).ready(function () {
 
+            agregarPedido();
+        })
         $(function () {
             $(document).on('click', '#borrar', function (event) {
                 var id = $(this).attr("data-cont");
+                $.get('borrarPedidoTemporal?id=' + id, function () {
+
+                })
                 $("#campo").attr("data-id", id).remove();
                 event.preventDefault();
                 $(this).closest('tr').remove();

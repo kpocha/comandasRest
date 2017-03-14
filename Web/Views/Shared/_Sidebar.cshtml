@@ -44,6 +44,20 @@
                         <span>Nuevo Pedido</span>
                     </a>
             </li>
+            </li>
+            <li class="@Html.isActive("Productos", "index")">
+                <a href="@Url.Action("index", "Productos")" title="Lista Comandas">
+                    <em class="icon-pencil"></em>
+                    <span>Productos</span>
+                </a>
+            </li>
+            </li>
+            <li class="@Html.isActive("Categorias", "index")">
+                <a href="@Url.Action("index", "Categorias")" title="Lista Comandas">
+                    <em class="icon-pencil"></em>
+                    <span>Categorías</span>
+                </a>
+            </li>
          
             @*<li class="@Html.isActive(controllers: new string[] { "Rubro", "Unidad", "Marca", "Articulo", "CondicionIva", "Account", "Personas" })">
                 <a href="#configuracion" title="Configuracion" data-toggle="collapse">
