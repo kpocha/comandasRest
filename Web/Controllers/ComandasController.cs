@@ -73,14 +73,15 @@ namespace Web.Controllers
             }
             catch(Exception e)
             {
-                SetTempData("Ha ocurrido un error al cargar el pedido", "error");
+                SetTempData("Ha ocurrido un error al cargar el pedido (recuerde que deben existir la lista de productos)", "error");
                 return RedirectToAction("index");
             }
         }
         public void borrarPedidoTemporal(string id)
         {
-
+            
             var lista = (List<ProductosPedidos>)Session["listaPedidos"];
+            if(lista.Count() > 1 ) { 
             var lista2 = new List<ProductosPedidos>();
             var producto = lista[int.Parse(id)];
 
@@ -88,9 +89,14 @@ namespace Web.Controllers
             {
                 if (p.nombre != producto.nombre)
                     lista2.Add(p);
-            }
-            Session["listaPedidos"] = null;
+            } 
+            
             Session["listaPedidos"] = lista2;
+            }
+            else
+            {
+                Session["listaPedidos"] = null;
+            }
         }
         // GET: Comandas
         public ActionResult NuevaComanda()
