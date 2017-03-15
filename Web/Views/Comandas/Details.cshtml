@@ -44,12 +44,7 @@
                 @Html.EditorFor(model => model.userId, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
             </div>
         </div>*@
-        <div class="form-group">
-            @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-4 col-sm-3 margin" })
-            <div class="col-md-8 col-sm-9 margin">
-                @Html.EditorFor(model => model.fecha, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            </div>
-        </div>
+        
         @*<div class="form-group">
             @Html.LabelFor(model => model.user, htmlAttributes: new { @class = "control-label col-md-4 col-sm-3 margin" })
             <div class="col-md-8 col-sm-9 margin">
@@ -57,17 +52,17 @@
             </div>
         </div>*@
 
-<div class="form-group">
-    <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-left">
-        @Html.ActionLink("Editar", "Edit", null, new { id = Model.comandaId }, new { @class = "btn btn-info marginlg" }) &nbsp;
-    </div>
-</div>
     
     </div>
     <div class="row">
+     
         <div class="col-md-6">
+            <div class="form-group">
+               
+              
+            </div>
             <div class="panel panel-dark">
-                <div class="panel-heading">Detalle Comidas</div>
+                <div class="panel-heading">Detalle Comidas<span style="margin-left:100px;"> Fecha de creacion : @Model.fecha</span></div>
                 <div class="panel-body">
                     <table class="table table-striped">
                         <tr><th>Nombre</th><th>Cantidad</th><th>Precio</th></tr>
@@ -76,10 +71,12 @@
                             <tr>
                                 <td>@comida.nombreComida</td>
                                 <td>@comida.cantidad</td>
-                                <td>@comida.precio</td>
+                                <td>$ @comida.precio</td>
                             </tr>
                         }
+                        <tr style="border-top:2px solid black;"><td></td><td>Total</td><td>$ @Model.precioTotal</td></tr>
                     </table>
+                    
 
                 </div>
             </div>

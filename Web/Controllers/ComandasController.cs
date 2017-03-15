@@ -76,6 +76,20 @@ namespace Web.Controllers
                 return RedirectToAction("index");
             }
         }
+        public void borrarPedidoTemporal(string id)
+        {
+
+            var lista = (List<ProductosPedidos>)Session["listaPedidos"];
+            var lista2 = new List<ProductosPedidos>();
+            var producto = lista[int.Parse(id)];
+
+            foreach (var p in lista)
+            {
+                if (p.nombre != producto.nombre)
+                    lista2.Add(p);
+            }
+            Session["listaPedidos"] = lista2;
+        }
         // GET: Comandas
         public ActionResult NuevaComanda()
         {
@@ -98,8 +112,15 @@ namespace Web.Controllers
             }
             return View(comandas);
         }
-        public ActionResult ListaPedidos(int productoId)
+        public ActionResult ListaPedidos(int? productoId)
         {
+            try { 
+            if(productoId == null)
+            {
+                var lista2 = (List<ProductosPedidos>)Session["listaPedidos"];
+                return PartialView("_partialListaPedidos", lista2);
+            }
+            else { 
             if (Session["listaPedidos"] == null)
             {
                 Session["listaPedidos"] = new List<ProductosPedidos>();
@@ -118,6 +139,12 @@ namespace Web.Controllers
 
             Session["listaPedidos"] = lista;
             return PartialView("_partialListaPedidos", lista);
+            }
+            }
+            catch
+            {
+                return null;
+            }
         }
         public ActionResult listaProductos(int? categoriaId)
         {
