@@ -10,6 +10,8 @@ using Web.Entidad.Models;
 
 namespace Web.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Admin, Mozo")]
     public class ComandasController : CommonController
     {
         //private CSPOSContext db = new CSPOSContext();
