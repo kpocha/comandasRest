@@ -10,8 +10,7 @@ using Web.Entidad.Models;
 
 namespace Web.Controllers
 {
-    [Authorize]
-    [Authorize(Roles = "Admin, Mozo")]
+    [AuthLog(Roles = "Mozo")]
     public class ComandasController : CommonController
     {
         //private CSPOSContext db = new CSPOSContext();
@@ -90,6 +89,7 @@ namespace Web.Controllers
                 if (p.nombre != producto.nombre)
                     lista2.Add(p);
             }
+            Session["listaPedidos"] = null;
             Session["listaPedidos"] = lista2;
         }
         // GET: Comandas
