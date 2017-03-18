@@ -10,7 +10,7 @@ using Web.Entidad.Models;
 
 namespace Web.Controllers
 {
-    [AuthLog(Roles = "Mozo")]
+    [AuthLog(Roles = "Mozo,Admin")]
     public class ComandasController : CommonController
     {
         //private CSPOSContext db = new CSPOSContext();
@@ -35,6 +35,7 @@ namespace Web.Controllers
             return lista;
 
         }
+        
         public ActionResult Index()
         {
             UnitOfWork uow = new UnitOfWork();
