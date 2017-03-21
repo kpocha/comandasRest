@@ -46,9 +46,16 @@ namespace Web.Controllers
         }
 
         // GET: Categorias/Create
-        public ActionResult Create()
+        public ActionResult Create(int? partial = 0)
         {
-            return View();
+            if (partial == 0)
+                return View();
+            else
+            {
+                ViewBag.Partial = true;
+                return PartialView();
+            }
+                
         }
 
         // POST: Categorias/Create

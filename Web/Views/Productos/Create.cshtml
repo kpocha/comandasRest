@@ -67,7 +67,7 @@
 													@Html.DropDownList("categoriaId", null, htmlAttributes: new { @class = "form-control" })
 																@Html.ValidationMessageFor(model => model.categoriaId, "", new { @class = "text-danger" })
 												</div>
-                                <div class="col-md-3"><a href="@Url.Action("create","Categorias")" class="btn btn-info">Crear Categoría</a></div>
+                                <div class="col-md-3"><a href="#" class="btn btn-info add-equipo">Crear Categoría</a></div>
 				        	</div>
 
 							<div class="form-group">
@@ -88,8 +88,41 @@
 			</div>
 		</div>
 	}
+@section BodyArea {
 
+    <div id="scrollingModalDatosEquipo" tabindex="-1" role="dialog" aria-labelledby="myModalLabelLarge" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Cerrar</button>
+                    <button type="button" class="btn btn-primary crear-equipo">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $(".add-equipo").on("click", function () {
+        //var equipo = $('#Equipo_Nombre').val();
+        //console.log(equipo);
+        //if (equipo == undefined || equipo == "") {
+            var parametros = "?partial=" + 1;
+            $.get('@Url.RouteUrl("", new { controller = "Categorias", action = "Create" })' + parametros, function (data, status) {
+                $("#scrollingModalDatosEquipo .modal-body").html(data);
+                $('#scrollingModalDatosEquipo').modal('show');
+            });
+        //}
+    });
+
+
+    $('.crear-equipo').on('click', function (event) {
+        $form = $("form#create-categoria");
+        $form.find('[type="submit"]').trigger('click');
+        console.log($form.validate);
+    });
+    </script>
 }
