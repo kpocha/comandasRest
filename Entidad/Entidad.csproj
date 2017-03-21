@@ -78,6 +78,7 @@
       <DependentUpon>201703110712180_addInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ModelsExtension\Comandas.cs" />
     <Compile Include="Models\Categorias.cs" />
     <Compile Include="Models\Comandas.cs" />
     <Compile Include="Models\DetalleComandas.cs" />

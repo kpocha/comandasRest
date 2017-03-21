@@ -7,8 +7,16 @@
     var numeroFilas = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["rowGrid"]);
     var listaPedidos = (List<Web.Models.ProductosPedidos>)Session["listaPedidos"];
 }
-
-<h2>Nueva Comanda</h2>
+@section Styles{
+    <style type="text/css">
+        @@media screen and (max-width: 480px) {
+            .celphone{
+                display:none!important;
+            }
+        }
+    </style>
+    }
+<h4>Nueva Comanda</h4>
 <hr />
 <div class="row">
     <div class="col-md-12" style="margin-bottom:20px;">
@@ -24,7 +32,7 @@
 <div class="row">
    
     <div class="col-md-8">
-        <h3 style="font-family:Calibri;"> Pedido del cliente</h3>
+        <h3 style="font-family:Calibri;" class="celphone"> Pedido del cliente</h3>
         <hr />
         <form id="formu" method="post" action="@Url.Action("agregarComanda","Comandas")">
             <div id="tablaPedidos">

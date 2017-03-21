@@ -48,7 +48,7 @@
                     <li class="@Html.isActive(controller:"Comandas", action:null)">
                         <a href="@Url.Action("NuevaComanda", "Comandas")" title="Autorizar Ventas">
                             <em class="fa fa-check-circle" aria-hidden="true"></em>
-                            <span>Editar Comandas</span>
+                            <span>Nueva Comandas</span>
                         </a>
                     </li>
                 </ul>
@@ -59,8 +59,8 @@
             <span>Lista Pedidos</span>
         </a>
     </li>*@
-                <li class="@Html.isActive("Comandas", "NuevaComanda")">
-                    <a href="@Url.Action("NuevaComanda", "Comandas")" title="Lista Comandas">
+                <li class="@Html.isActive("Comandas", "Estadistica")">
+                    <a href="@Url.Action("ListComandaDay", "Estadistica")" title="Lista Comandas">
                         <em class="icon-chart"></em>
                         <span>Estadisticas</span>
                     </a>

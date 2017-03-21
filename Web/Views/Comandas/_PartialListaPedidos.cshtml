@@ -37,6 +37,13 @@
                             </tr>
                             contador++;
                         }
+                        @* El total no anda por la logica del back. SOLUCIONAR - Van a ver mas problemas como este.
+                            <tr>
+                            <td></td>
+                            <td class="bg-gray">Total: </td>
+                            <td class="bg-gray">@Model.Sum(a=>a.precio)</td>
+                            <td></td>
+                        </tr>*@
                     </tbody>
                 </table>
             </div>
