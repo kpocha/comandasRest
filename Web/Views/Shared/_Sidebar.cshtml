@@ -32,6 +32,53 @@
             <li class="nav-heading">
                 <span>Menú</span>
             </li>
+            <li class="@Html.isActive(controllers: new string[] { "Comandas", "Index" })">
+                <a href="#ventas" title="Ventas" data-toggle="collapse">
+                    <em class="fa fa-shopping-cart"></em>
+                    <span data-localize="sidebar.nav.VENTAS">Gestión Comandas</span>
+                </a>
+                <ul id="ventas" class="nav sidebar-subnav collapse">
+                    <li class="sidebar-subnav-header">Ventas</li>
+                    <li class="@Html.isActive(controller:"Comandas", action:null)">
+                        <a href="@Url.Action("Index","Comandas")" title="Ventas">
+                            <em class="fa fa-shopping-cart"></em>
+                            <span>Lista</span>
+                        </a>
+                    </li>
+                    <li class="@Html.isActive(controller:"Comandas", action:null)">
+                        <a href="@Url.Action("NuevaComanda", "Comandas")" title="Autorizar Ventas">
+                            <em class="fa fa-check-circle" aria-hidden="true"></em>
+                            <span>Nueva Comandas</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @*<li class="@Html.isActive("Comandas", "Index")">
+        <a href="@Url.Action("Index", "Comandas")" title="Lista Comandas">
+            <em class="icon-pencil"></em>
+            <span>Lista Pedidos</span>
+        </a>
+    </li>*@
+                <li class="@Html.isActive("Comandas", "Estadisticas")">
+                    <a href="@Url.Action("ListComandaDay", "Estadisticas")" title="Lista Comandas">
+                        <em class="icon-chart"></em>
+                        <span>Estadisticas</span>
+                    </a>
+            </li>
+            <li class="@Html.isActive("Productos", "index")">
+                <a href="@Url.Action("index", "Productos")" title="Lista Comandas">
+                    <em class="icon-bag"></em>
+                    <span>Productos</span>
+                </a>
+            </li>
+            </li>
+            <li class="@Html.isActive("Categorias", "index")">
+                <a href="@Url.Action("index", "Categorias")" title="Lista Comandas">
+                    <em class="icon-list"></em>
+                    <span>Categorías</span>
+                </a>
+            </li>
+         
             @*<li class="@Html.isActive(controllers: new string[] { "Rubro", "Unidad", "Marca", "Articulo", "CondicionIva", "Account", "Personas" })">
                 <a href="#configuracion" title="Configuracion" data-toggle="collapse">
                     <em class="icon-wrench"></em>

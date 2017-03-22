@@ -9,7 +9,8 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    [Authorize]
+
+
     public class UsersController : Controller
     {
         // GET: Users

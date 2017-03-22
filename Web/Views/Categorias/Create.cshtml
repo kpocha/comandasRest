@@ -1,0 +1,82 @@
+﻿@model Web.Entidad.Models.Categorias
+
+@{
+    ViewBag.Title = "Create";
+    var fieldset = "";
+    var class_container = "hidden";
+    var class_buttons = " hidden-xs hidden-sm hidden-md hidden-lg";
+
+    if (!ViewBag.Partial)
+    {
+        fieldset = "col-md-6";
+        class_container = "container";
+        class_buttons = "";
+    }
+}
+
+
+ <style>
+        #titulo {text-transform: uppercase;}
+		.margin{margin-top:10px;}
+		.panel-title-principal{background-color:#ebebeb;}
+    </style>
+<div class="containe">
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>Home &raquo; Categorias &raquo; Nueva</h4>
+        </div>
+    </div>
+    <div class="row @class_container">
+        <div class="col-sm-12">
+            <div class="panel panel-default panel-title-principal">
+                <div class="panel-body">
+					<div class="row">
+                        <div class="col-md-6 col-xs-6 pull-left margin">
+							<h2 id="titulo" class="pull-left ">Crear Categoría</h2>
+                        </div>
+                        <div class="col-md-6 col-xs-6 pull-right">
+							<a href="@Url.Action("Index", "Categorias")" class="btn btn-info pull-right margin" style="display:inline-block;">
+								<span class="icon icon-action-undo"></span>
+								Volver
+							</a>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@using (Ajax.BeginForm("Create", "Categorias", null, new AjaxOptions
+{
+    OnSuccess = "onSuccess"
+    @*UpdateTargetId = "result"*@
+}, new { id = "create-categoria", data_parsley_validate = "", novalidate = "" }))
+{
+		@Html.AntiForgeryToken()
+
+		<div class="form-horizontal">
+				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+			<div class="col-md-6 col-md-offset-3 col-sm-offset-3">
+			
+							<div class="form-group">
+									@Html.LabelFor(model => model.detalle,"Nombre de Categoría", htmlAttributes: new { @class = "control-label col-md-4 col-sm-3" })
+									<div class="col-md-8 col-sm-9">
+										@Html.EditorFor(model => model.detalle, new { htmlAttributes = new { @class = "form-control" } })
+													@Html.ValidationMessageFor(model => model.detalle, "", new { @class = "text-danger" })
+												</div>
+					</div>
+
+							<div class="form-group">
+					<div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-left">
+						<input type="submit" value="Guardar" class="btn btn-info @class_buttons" />
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

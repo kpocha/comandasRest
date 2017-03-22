@@ -9,7 +9,7 @@
         <table class="table table-condensed">
             <tr>
                 <th>Nombre</th>
-                <th>precio</th>
+                <th>Precio</th>
             </tr>
             <tbody>
                 @foreach (var comida in Model)
@@ -24,7 +24,7 @@
                                 @comida.detalle
                             </button>
                         </td>
-                        <td>@comida.precio</td>
+                        <td>$ @comida.precio</td>
                     </tr>
                 }
             </tbody>

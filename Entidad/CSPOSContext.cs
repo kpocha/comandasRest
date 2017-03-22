@@ -28,6 +28,8 @@ namespace Web.Entidad
             //.HasColumnName("contenido")
             //.HasColumnType("image");
 
+            modelBuilder.Entity<Comandas>().Ignore(a => a.timeAgo);
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

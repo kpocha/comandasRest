@@ -5,7 +5,7 @@ using Web.Entidad.Repository.Interface;
 
 namespace Web.Entidad.Models
 {
-    public class Comandas : IEntity
+    public partial class Comandas : IEntity
     {
 
         [Key]

@@ -1,0 +1,128 @@
+﻿@model Web.Entidad.Models.Productos
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+ <style>
+        #titulo {text-transform: uppercase;}
+		.margin{margin-top:10px;}
+		.panel-title-principal{background-color:#ebebeb;}
+    </style>
+<div class="containe">
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>Home &raquo; Productos &raquo; Nuevo</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default panel-title-principal">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6 pull-left margin">
+                            <h2 id="titulo" class="pull-left ">NUEVO Productos</h2>
+                        </div>
+                        <div class="col-md-6 col-xs-6 pull-right">
+                            <a href="@Url.Action("Index", "Productos")" class="btn btn-info pull-right margin" style="display:inline-block;">
+                                <span class="icon icon-action-undo"></span>
+                                Volver
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm()) 
+	{
+		@Html.AntiForgeryToken()
+    
+		<div class="form-horizontal">
+				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+			<div class="col-md-6 col-md-offset-3 col-sm-offset-3">
+			
+							<div class="form-group">
+									@Html.LabelFor(model => model.detalle,"Nombre del plato", htmlAttributes: new { @class = "control-label col-md-4 col-sm-3" })
+									<div class="col-md-8 col-sm-9">
+										@Html.EditorFor(model => model.detalle, new { htmlAttributes = new { @class = "form-control" } })
+													@Html.ValidationMessageFor(model => model.detalle, "", new { @class = "text-danger" })
+												</div>
+					</div>
+
+							<div class="form-group">
+									@Html.LabelFor(model => model.precio, htmlAttributes: new { @class = "control-label col-md-4 col-sm-3" })
+									<div class="col-md-8 col-sm-9">
+										@Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control" } })
+													@Html.ValidationMessageFor(model => model.precio, "", new { @class = "text-danger" })
+												</div>
+					</div>
+
+							<div class="form-group">
+									@Html.LabelFor(model => model.categoriaId, "Categorías", htmlAttributes: new { @class = "control-label col-md-4 col-sm-3" })
+									<div class="col-md-5 col-sm-9">
+													@Html.DropDownList("categoriaId", null, htmlAttributes: new { @class = "form-control" })
+																@Html.ValidationMessageFor(model => model.categoriaId, "", new { @class = "text-danger" })
+												</div>
+                                <div class="col-md-3"><a href="#" class="btn btn-info add-equipo">Crear Categoría</a></div>
+				        	</div>
+
+							<div class="form-group">
+									@Html.LabelFor(model => model.hay, htmlAttributes: new { @class = "control-label col-md-4 col-sm-3" })
+									<div class="col-md-8 col-sm-9">
+										<div class="checkbox">
+										@Html.EditorFor(model => model.hay)
+    													@Html.ValidationMessageFor(model => model.hay, "", new { @class = "text-danger" })
+    													</div>
+									</div>
+					</div>
+
+							<div class="form-group">
+					<div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-left">
+						<input type="submit" value="Guardar" class="btn btn-info" />
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+@section BodyArea {
+
+    <div id="scrollingModalDatosEquipo" tabindex="-1" role="dialog" aria-labelledby="myModalLabelLarge" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Cerrar</button>
+                    <button type="button" class="btn btn-primary crear-equipo">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $(".add-equipo").on("click", function () {
+        //var equipo = $('#Equipo_Nombre').val();
+        //console.log(equipo);
+        //if (equipo == undefined || equipo == "") {
+            var parametros = "?partial=" + 1;
+            $.get('@Url.RouteUrl("", new { controller = "Categorias", action = "Create" })' + parametros, function (data, status) {
+                $("#scrollingModalDatosEquipo .modal-body").html(data);
+                $('#scrollingModalDatosEquipo').modal('show');
+            });
+        //}
+    });
+
+
+    $('.crear-equipo').on('click', function (event) {
+        $form = $("form#create-categoria");
+        $form.find('[type="submit"]').trigger('click');
+        console.log($form.validate);
+    });
+    </script>
+}
