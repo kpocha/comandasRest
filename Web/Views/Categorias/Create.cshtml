@@ -2,6 +2,16 @@
 
 @{
     ViewBag.Title = "Create";
+    var fieldset = "";
+    var class_container = "hidden";
+    var class_buttons = " hidden-xs hidden-sm hidden-md hidden-lg";
+
+    if (!ViewBag.Partial)
+    {
+        fieldset = "col-md-6";
+        class_container = "container";
+        class_buttons = "";
+    }
 }
 
 
@@ -16,7 +26,7 @@
             <h4>Home &raquo; Categorias &raquo; Nueva</h4>
         </div>
     </div>
-    <div class="row">
+    <div class="row @class_container">
         <div class="col-sm-12">
             <div class="panel panel-default panel-title-principal">
                 <div class="panel-body">
@@ -37,8 +47,12 @@
     </div>
 
 
-@using (Html.BeginForm()) 
-	{
+@using (Ajax.BeginForm("Create", "Categorias", null, new AjaxOptions
+{
+    OnSuccess = "onSuccess"
+    @*UpdateTargetId = "result"*@
+}, new { id = "create-categoria", data_parsley_validate = "", novalidate = "" }))
+{
 		@Html.AntiForgeryToken()
 
 		<div class="form-horizontal">
@@ -55,7 +69,7 @@
 
 							<div class="form-group">
 					<div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-left">
-						<input type="submit" value="Guardar" class="btn btn-info" />
+						<input type="submit" value="Guardar" class="btn btn-info @class_buttons" />
 					</div>
 				</div>
 			</div>

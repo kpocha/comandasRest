@@ -43,7 +43,6 @@ namespace Web
                 "~/Scripts/app/modules/toggle-state.js",
                 "~/Scripts/app/modules/utils.js",
                 "~/Scripts/app/modules/chart.js",
-                "~/Scripts/app/modules/morris.js",
                 "~/Scripts/app/modules/rickshaw.js",
                 "~/Scripts/app/modules/chartist.js",
                 "~/Scripts/app/modules/tour.js",
@@ -126,6 +125,14 @@ namespace Web
             ));
             bundles.Add(new StyleBundle("~/bundles/bootstrapDatepickerCss").Include(
               "~/Content/bootstrap-datepicker.min.css"
+            ));
+            bundles.Add(new StyleBundle("~/bundles/MorrisCss").Include(
+                "~/Scripts/morris.js/morris.css"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Morris").Include(
+              "~/Scripts/raphael/raphael.js",
+              "~/Scripts/morris.js/morris.js"
             ));
 
             // Utilice la versión de desarrollo de Modernizr para desarrollar y obtener información. De este modo, estará

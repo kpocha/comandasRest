@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Web.Models;
 using Web.Entidad;
 using Web.Entidad.Models;
+using Utils = Servicio.Utils;
 
 namespace Web.Controllers
 {
@@ -16,11 +17,13 @@ namespace Web.Controllers
         //private CSPOSContext db = new CSPOSContext();
 
         IUnitOfWork unitOfWork;
+        Utils u;
 
         public ComandasController() : this(new UnitOfWork()) { }
 
         public ComandasController(IUnitOfWork uow)
         {
+            u = new Utils();
             unitOfWork = uow;
         }
         public IEnumerable<SelectListItem> listaCategorias(int? selected = 0)
@@ -35,11 +38,31 @@ namespace Web.Controllers
             return lista;
 
         }
-        
+        [AuthLog(Roles = "Admin")]
         public ActionResult Index()
         {
+           
             UnitOfWork uow = new UnitOfWork();
-            var asd = uow.ComandasRepository.All().ToList();
+            var asd = uow.ComandasRepository.All().OrderByDescending(a=>a.fecha).ToList();
+            asd.ForEach(s=>s.timeAgo = u.TimeAgo(s.fecha));
+            var test = u.TimeAgo(asd.First().fecha);
+            var test2 = asd.First();
+            foreach (var a in asd)
+            {
+                var timeAgo = u.TimeAgo(a.fecha);
+                asd.Where(d => d.comandaId == a.comandaId).First().timeAgo = "some value";
+
+                asd.Where(b => b.comandaId == a.comandaId).FirstOrDefault().timeAgo = timeAgo;
+
+                a.timeAgo.Replace(a.timeAgo, timeAgo);
+                a.timeAgo = timeAgo;
+            }
+            asd.First();
+            //foreach (var a in asd)
+            //{
+            //    a.timeAgo = u.TimeAgo(asd.First().fecha);
+            //}
+
             return View(asd);
         }
         [HttpPost]
@@ -102,7 +125,7 @@ namespace Web.Controllers
         // GET: Comandas
         public ActionResult NuevaComanda()
         {
-
+            Session["listaPedidos"] = null;
             ViewData["categoriaId"] = listaCategorias();
             var listaSPedidos = (List<ProductosPedidos>)Session["listaPedidos"];
             ViewBag.contador = 0;
@@ -121,6 +144,7 @@ namespace Web.Controllers
             }
             return View(comandas);
         }
+        [AuthLog(Roles = "Admin,Mozo")]
         public ActionResult ListaPedidos(int? productoId)
         {
             try { 
@@ -157,7 +181,7 @@ namespace Web.Controllers
         }
         public ActionResult listaProductos(int? categoriaId)
         {
-            var lista = unitOfWork.ProductosRepository.Filter(x => x.categoriaId == categoriaId);
+            var lista = unitOfWork.ProductosRepository.Filter(x => x.categoriaId == categoriaId && x.hay);
             return PartialView("_partialProductos", lista.ToList());
         }
         // GET: Comandas/Details/5
@@ -250,7 +274,7 @@ namespace Web.Controllers
             return View(comandas);
 
         }
-
+        [AuthLog(Roles = "Admin")]
         // GET: Comandas/Delete/5
         public ActionResult Delete(int? id)
         {
