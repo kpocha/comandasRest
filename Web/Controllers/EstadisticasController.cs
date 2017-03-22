@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using Web.Entidad;
 using Web.Entidad.Models;
 using Web.Helpers;
@@ -23,18 +26,25 @@ namespace Web.Controllers
             e = new Estadisticas();
             unitOfWork = uow;
         }
-        
-        public String ListComandaDay()
+
+        public ActionResult ListComandaDay()
         {
-            DateTime today = new DateTime();
-            var comandasToday = e.ListComandaDay();
-            //List<Categorias> comandasToday = unitOfWork.CategoriasRepository.All().ToList();
-            //example how to use helper json
-            JsonHelper helper = new JsonHelper();
-            String jsonResult = helper.ConvertObjectToJSon(comandasToday);
-            return jsonResult;
+            return View();
         }
 
-        
+        public string datosEstadisticos()
+        {
+            var comandasToday = e.ListComandaDay();
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            //string jsonResult = js.Serialize(comandasToday);
+            // var jsonResult = Json(comandasToday, JsonRequestBehavior.AllowGet);
+            var list = JsonConvert.SerializeObject(comandasToday,
+             Formatting.None,
+             new JsonSerializerSettings()
+             {
+                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+             });
+            return list;
+        }
     }
 }

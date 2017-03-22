@@ -1,4 +1,5 @@
-﻿@model String
+﻿@model string
+
 @{
     ViewBag.Title = "ListComandaDay";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,25 +8,26 @@
 <h2>Vendido Hoy</h2>
 
 <div class="container-fluid">
+    <div id="datos"></div>
     @*<div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Line</div>
-                <div class="panel-body">
-                    <div id="morris-line"></div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Line</div>
+                    <div class="panel-body">
+                        <div id="morris-line"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Area</div>
-                <div class="panel-body">
-                    <div id="morris-area"></div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Area</div>
+                    <div class="panel-body">
+                        <div id="morris-area"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>*@
-    @model
+        </div>*@
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -36,13 +38,13 @@
             </div>
         </div>
         @*<div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Donut</div>
-                <div class="panel-body">
-                    <div id="morris-donut"></div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Donut</div>
+                    <div class="panel-body">
+                        <div id="morris-donut"></div>
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
     </div>
 </div>
 @section Styles {
@@ -53,77 +55,97 @@
     @Scripts.Render("~/bundles/Morris")
     <script type="text/javascript">
         // Morris
-        // ----------------------------------- 
+        // -----------------------------------
+
+        $(document).ready(function () {
+
+        });
 
         (function (window, document, $, undefined) {
 
             $(function () {
+                $.ajax({
+                    url: '@Url.Action("datosEstadisticos", "Estadisticas")',
+                    success: function (data) {
+                        var datos = JSON.parse(data);
+                        console.log(datos);
+                        //chartdata = data
 
-                if (typeof Morris === 'undefined') return;
+                        if (typeof Morris === 'undefined') return;
+                        var chartdata = [
+                            { y: "2006", a: 100, b: 90 },
+                            { y: "2007", a: 75, b: 65 },
+                            { y: "2008", a: 50, b: 40 },
+                            { y: "2009", a: 75, b: 65 },
+                            { y: "2010", a: 50, b: 40 },
+                            { y: "2011", a: 75, b: 65 },
+                            { y: "2012", a: 100, b: 90 }
+                        ];
+                        // Bar Chart
+                        // -----------------------------------
+                        new Morris.Bar({
+                            element: 'morris-bar',
+                            data: datos,
+                            xkey: 'y',
+                            ykeys: ["a", "b"],
+                            labels: ["Series A", "Series B"],
+                            xLabelMargin: 2,
+                            barColors: ['#23b7e5', '#f05050'],
+                            resize: true
+                        });
+                        ////var chartdata = [
+                        ////    { y: "2006", a: 100, b: 90 },
+                        ////    { y: "2007", a: 75, b: 65 },
+                        ////    { y: "2008", a: 50, b: 40 },
+                        ////    { y: "2009", a: 75, b: 65 },
+                        ////    { y: "2010", a: 50, b: 40 },
+                        ////    { y: "2011", a: 75, b: 65 },
+                        ////    { y: "2012", a: 100, b: 90 }
+                        ////];
 
-                var chartdata = [
-                    { y: "2006", a: 100, b: 90 },
-                    { y: "2007", a: 75, b: 65 },
-                    { y: "2008", a: 50, b: 40 },
-                    { y: "2009", a: 75, b: 65 },
-                    { y: "2010", a: 50, b: 40 },
-                    { y: "2011", a: 75, b: 65 },
-                    { y: "2012", a: 100, b: 90 }
-                ];
+                        ////var donutdata = [
+                        ////  { label: "Download Sales", value: 12 },
+                        ////  { label: "In-Store Sales", value: 30 },
+                        ////  { label: "Mail-Order Sales", value: 20 }
+                        ////];
 
-                //var donutdata = [
-                //  { label: "Download Sales", value: 12 },
-                //  { label: "In-Store Sales", value: 30 },
-                //  { label: "Mail-Order Sales", value: 20 }
-                //];
+                        //// Line Chart
+                        //// -----------------------------------
 
-                // Line Chart
-                // ----------------------------------- 
+                        ////new Morris.Line({
+                        ////    element: 'morris-line',
+                        ////    data: chartdata,
+                        ////    xkey: 'y',
+                        ////    ykeys: ["a", "b"],
+                        ////    labels: ["Serie A", "Serie B"],
+                        ////    lineColors: ["#31C0BE", "#7a92a3"],
+                        ////    resize: true
+                        ////});
 
-                //new Morris.Line({
-                //    element: 'morris-line',
-                //    data: chartdata,
-                //    xkey: 'y',
-                //    ykeys: ["a", "b"],
-                //    labels: ["Serie A", "Serie B"],
-                //    lineColors: ["#31C0BE", "#7a92a3"],
-                //    resize: true
-                //});
+                        //// Donut Chart
+                        //// -----------------------------------
+                        ////new Morris.Donut({
+                        ////    element: 'morris-donut',
+                        ////    data: donutdata,
+                        ////    colors: ['#f05050', '#fad732', '#ff902b'],
+                        ////    resize: true
+                        ////});
 
-                // Donut Chart
-                // ----------------------------------- 
-                //new Morris.Donut({
-                //    element: 'morris-donut',
-                //    data: donutdata,
-                //    colors: ['#f05050', '#fad732', '#ff902b'],
-                //    resize: true
-                //});
 
-                // Bar Chart
-                // ----------------------------------- 
-                new Morris.Bar({
-                    element: 'morris-bar',
-                    data: chartdata,
-                    xkey: 'y',
-                    ykeys: ["a", "b"],
-                    labels: ["Series A", "Series B"],
-                    xLabelMargin: 2,
-                    barColors: ['#23b7e5', '#f05050'],
-                    resize: true
+
+                        //// Area Chart
+                        //// -----------------------------------
+                        ////new Morris.Area({
+                        ////    element: 'morris-area',
+                        ////    data: chartdata,
+                        ////    xkey: 'y',
+                        ////    ykeys: ["a", "b"],
+                        ////    labels: ["Serie A", "Serie B"],
+                        ////    lineColors: ['#7266ba', '#23b7e5'],
+                        ////    resize: true
+                        ////});
+                    }
                 });
-
-                // Area Chart
-                // ----------------------------------- 
-                //new Morris.Area({
-                //    element: 'morris-area',
-                //    data: chartdata,
-                //    xkey: 'y',
-                //    ykeys: ["a", "b"],
-                //    labels: ["Serie A", "Serie B"],
-                //    lineColors: ['#7266ba', '#23b7e5'],
-                //    resize: true
-                //});
-
             });
 
         })(window, document, window.jQuery);
