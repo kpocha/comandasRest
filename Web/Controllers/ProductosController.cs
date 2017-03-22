@@ -11,6 +11,7 @@ using Web.Entidad.Models;
 
 namespace Web.Controllers
 {
+    [AuthLog(Roles = "Admin")]
     public class ProductosController : CommonController
     {
         //private WebContext db = new WebContext();

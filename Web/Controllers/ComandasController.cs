@@ -38,7 +38,7 @@ namespace Web.Controllers
             return lista;
 
         }
-        
+        [AuthLog(Roles = "Admin")]
         public ActionResult Index()
         {
            
@@ -144,6 +144,7 @@ namespace Web.Controllers
             }
             return View(comandas);
         }
+        [AuthLog(Roles = "Admin,Mozo")]
         public ActionResult ListaPedidos(int? productoId)
         {
             try { 
@@ -273,7 +274,7 @@ namespace Web.Controllers
             return View(comandas);
 
         }
-
+        [AuthLog(Roles = "Admin")]
         // GET: Comandas/Delete/5
         public ActionResult Delete(int? id)
         {

@@ -11,6 +11,7 @@ using Web.Entidad.Models;
 
 namespace Web.Controllers
 {
+    [AuthLog(Roles = "Admin")]
     public class CategoriasController : CommonController
     {
         //private WebContext db = new WebContext();
@@ -48,6 +49,7 @@ namespace Web.Controllers
         // GET: Categorias/Create
         public ActionResult Create(int? partial = 0)
         {
+            ViewBag.Partial = false;
             if (partial == 0)
                 return View();
             else

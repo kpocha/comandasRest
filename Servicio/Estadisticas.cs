@@ -22,10 +22,11 @@ namespace Servicio
         /// Encuentra las comandas que se hicieron en el dia de la fecha.
         /// </summary>
         /// <returns>Lista de comandas</returns>
-        public List<Comandas> ListComandaDay()
+        public List<DetalleComandas> ListComandaDay()
         {
-            DateTime today = new DateTime();
-            var comandasToday = unitOfWork.ComandasRepository.Filter(a => a.fecha.Day == today.Day);
+            DateTime today = DateTime.Today;
+            var comandasToday = //unitOfWork.ComandasRepository.Filter(a => a.fecha.Day == today.Day).Select(b=>b.detalleComanda).ToList();
+            unitOfWork.DetalleComandasRepository.Filter(a => a.comanda.fecha.Day == today.Day);
 
             return comandasToday.ToList();
         }
@@ -35,11 +36,17 @@ namespace Servicio
         /// <returns>Lista de comandas</returns>
         public List<Comandas> ListComandasMonth()
         {
-            DateTime today = new DateTime();
+            DateTime today = DateTime.Today;
             var comandasToday = unitOfWork.ComandasRepository.Filter(a => a.fecha.Month == today.Month);
             
             return comandasToday.ToList();
         }
+        //public List<Productos> ListProductsSoldMonth()
+        //{
+        //    DateTime today = new DateTime();
+        //    var comandasProductos = unitOfWork.ComandasRepository.Filter(a=>a.detalleComanda.);
+        //    return 
+        //}
         
     }
 }
